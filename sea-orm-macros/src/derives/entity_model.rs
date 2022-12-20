@@ -55,6 +55,14 @@ pub fn expand_derive_entity_model(data: Data, attrs: Vec<Attribute>) -> syn::Res
                     fn table_name(&self) -> &str {
                         #table_name
                     }
+
+                    fn module_name(&self) -> &str {
+                        let module = module_path!();
+                        module
+                            .rsplit_once("::")
+                            .map(|(_, final_mod)| final_mod)
+                            .unwrap_or(module)
+                    }
                 }
             }
         })
